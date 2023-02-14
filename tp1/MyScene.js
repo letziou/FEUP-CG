@@ -30,6 +30,7 @@ export class MyScene extends CGFscene {
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
+    this.displayDiamond = true;
   }
   initLights() {
     this.lights[0].setPosition(15, 2, 5, 1);
@@ -91,7 +92,7 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    this.diamond.display();
+    if(this.displayDiamond) this.diamond.display();
 
     // ---- END Primitive drawing section
   }
