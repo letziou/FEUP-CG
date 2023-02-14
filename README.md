@@ -1,6 +1,6 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T06G06
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
 | Diogo Pinheiro ALmeida         | 202006059 | up202006059@up.pt                |
