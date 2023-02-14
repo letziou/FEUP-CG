@@ -3,8 +3,8 @@
 ## Group T0xG0y
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Diogo Pinheiro ALmeida         | 202006059 | up202006059@up.pt                |
+| Rafael Nuno Grilo Morgado         | 201506449 | up201506449@fc.up.pt                |
 
 ----
 
