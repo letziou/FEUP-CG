@@ -1,6 +1,6 @@
 # CG 2022/2023
 
-## Group T0xG0y
+## Group T06G06
 
 ## TP 1 Notes
 
