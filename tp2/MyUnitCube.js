@@ -7,6 +7,7 @@ import {CGFobject} from '../lib/CGF.js';
 export class MyUnitCube extends CGFobject {
 	constructor(scene) {
 		super(scene);
+    this.scene = scene;
 		this.initBuffers();
 	}
 	
@@ -44,4 +45,12 @@ export class MyUnitCube extends CGFobject {
 
 		this.initGLBuffers();
 	}
+
+  display() {
+    this.scene.pushMatrix();
+    this.scene.translate(0, 0, -0.51);
+    this.scene.scale(1, 1, 1);
+    super.display();
+    this.scene.popMatrix();
+  }
 }
