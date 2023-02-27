@@ -95,7 +95,7 @@ export class MyScene extends CGFscene {
     this.multMatrix(sca);
 
     // ---- BEGIN Primitive drawing section
-    //this.tangram.display();
+    this.tangram.display();
     //this.cube.display();
     /*
     this.pushMatrix();
@@ -105,7 +105,7 @@ export class MyScene extends CGFscene {
     this.translate(0, 0, -.51);
     this.cube.display();  
     this.popMatrix();
-    */
+    
     this.pushMatrix();
     this.rotate(-Math.PI / 2, 1, 0, 0);
     this.translate(.5, -.5, 1)
@@ -113,7 +113,7 @@ export class MyScene extends CGFscene {
     this.translate(0, 0, -.51);
     this.cubeQuad.display();
     this.popMatrix();
-    
+    */
     // ---- END Primitive drawing section
   }
 }
