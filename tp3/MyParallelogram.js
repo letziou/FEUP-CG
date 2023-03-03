@@ -12,6 +12,14 @@ export class MyParallelogram extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
+			//first loop
+			0, 0, 0,	//0
+			1, 0, 0,	//1
+			1, 1, 0,	//2
+      2, 0, 0,  //3 
+      2, 1, 0,  //4
+      3, 1, 0,  //5
+			//second loop
 			0, 0, 0,	//0
 			1, 0, 0,	//1
 			1, 1, 0,	//2
@@ -20,14 +28,35 @@ export class MyParallelogram extends CGFobject {
       3, 1, 0,  //5
 		];
 
-		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0,
+			0, 1, 2,
+			2, 1, 3,
+			2, 3, 4,
+			4, 3, 5, 
+			5, 3, 4,
+			4, 3, 2,
+			3, 1, 2,
+			2, 1, 0
+		];
+
+		this.normals = [
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1
 		];
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
-		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
+		this.primitiveType = this.scene.gl.TRIANGLES;
 
 		this.initGLBuffers();
 	}

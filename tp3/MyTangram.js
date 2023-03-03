@@ -67,4 +67,26 @@ display() {
     this.triangleBig.display();
     this.scene.popMatrix();
   }
+
+  enableNormalViz() {
+      this.parallelogram.enableNormalViz();
+      this.diamond.enableNormalViz();
+      this.triangle.enableNormalViz();
+      this.triangleBig.enableNormalViz();
+      this.triangleSmall.enableNormalViz();
+  }
+
+  disableNormalViz() {
+      this.parallelogram.disableNormalViz();
+      this.diamond.disableNormalViz();
+      this.triangle.disableNormalViz();
+      this.triangleBig.disableNormalViz();
+      this.triangleSmall.disableNormalViz();
+  }
+
+  updateBuffers(complexity){
+      // reinitialize buffers
+      this.initBuffers();
+      this.initNormalVizBuffers();
+  }
 }

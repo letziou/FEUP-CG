@@ -12,6 +12,11 @@ export class MyTriangleBig extends CGFobject {
 	
 	initBuffers() {
 		this.vertices = [
+			//first loop
+			2, 0, 0,	//0
+			0, 2, 0,	//1
+			-2, 0, 0,	//2
+			//second loop
 			2, 0, 0,	//0
 			0, 2, 0,	//1
 			-2, 0, 0,	//2
@@ -19,7 +24,16 @@ export class MyTriangleBig extends CGFobject {
 
 		//Counter-clockwise reference of vertices
 		this.indices = [
-			0, 1, 2,
+			0, 1, 2, 2, 1, 0,
+		];
+
+		this.normals = [
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, -1,
+			0, 0, -1,
+			0, 0, -1,
 		];
 
 		//The defined indices (and corresponding vertices)
