@@ -15,6 +15,9 @@ export class MyTriangle extends CGFobject {
 			-1, 1, 0,	//0
 			-1, -1, 0,	//1
 			1, -1, 0,	//2
+			-1, 1, 0,	//0
+			-1, -1, 0,	//1
+			1, -1, 0,	//2
 		];
 
 		//Counter-clockwise reference of vertices
