@@ -1,7 +1,7 @@
 import {CGFobject} from '../lib/CGF.js';
 
 /**
- * MyQuad
+ * MyPrism
  * @constructor
  * @param scene - Reference to MyScene object
  */
