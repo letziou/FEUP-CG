@@ -10,11 +10,12 @@ export class MyTangram extends CGFobject{
     super(scene);
     this.scene = scene;
     this.diamond = new MyDiamond(scene);
-    this.diamond = new MyDiamond(scene);
     this.triangle = new MyTriangle(scene);
     this.parallelogram = new MyParallelogram(scene);
-    this.triangleBig = new MyTriangleBig(scene);
-    this.triangleSmall = new MyTriangleSmall(scene);
+    this.orangeTriangleBig = new MyTriangleBig(scene, 'orange');
+    this.blueTriangleBig = new MyTriangleBig(scene, 'blue');
+    this.redTriangleSmall = new MyTriangleSmall(scene, 'red');
+    this.purpleTriangleSmall = new MyTriangleSmall(scene, 'purple');
 
     this.initMaterials(scene);
 }
@@ -52,7 +53,7 @@ display() {
     this.scene.scale(1, 1, 1);
     this.scene.translate(-0.7, -1, 0);
     this.scene.rotate(Math.PI/4, 0, 0, 1);
-    this.triangleBig.display();
+    this.orangeTriangleBig.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
@@ -67,7 +68,7 @@ display() {
     this.scene.scale(1, 1, 1);
     this.scene.translate(-1.41, -1.71, 0);
     this.scene.rotate(-3*Math.PI/4, 0, 0, 1);
-    this.triangleSmall.display();
+    this.redTriangleSmall.display();
     this.scene.popMatrix();
 
     // right side small triangle
@@ -75,7 +76,7 @@ display() {
     this.scene.scale(1, 1, 1);
     this.scene.translate(1.424, -1.71, 0);
     this.scene.rotate(3*Math.PI/4, 0, 0, 1);
-    this.triangleSmall.display();
+    this.purpleTriangleSmall.display();
     this.scene.popMatrix();
 
     // this is the triangle in the top
@@ -83,7 +84,7 @@ display() {
     this.scene.scale(1, 1, 1);
     this.scene.translate(0, .41, 0);
     this.scene.rotate(0, 0, 0, 1);
-    this.triangleBig.display();
+    this.blueTriangleBig.display();
     this.scene.popMatrix();
   }
 
