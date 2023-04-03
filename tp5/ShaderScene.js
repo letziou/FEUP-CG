@@ -90,13 +90,19 @@ export class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/blueYellow.vert", "shaders/blueYellow.frag"),
+			new CGFshader(this.gl, "shaders/texture3anim2.vert", "shaders/texture3anim2.frag"),
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayScale.frag"),
 		];
 
 		// additional texture will have to be bound to texture unit 1 later, when using the shader, with "this.texture2.bind(1);"
 		this.testShaders[4].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[5].setUniformsValues({ uSampler2: 1 });
+
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
+
+		this.testShaders[10].setUniformsValues({ uSampler2: 1 });
+		this.testShaders[10].setUniformsValues({ timeFactor: 0 });
 
 
 
@@ -113,6 +119,8 @@ export class ShaderScene extends CGFscene {
 			'Sepia': 7,
 			'Convolution': 8,
 			'Blue-Yellow': 9,
+			'Animation example 2': 10,
+			'Gray Scale': 11
 		};
 
 		// shader code panels references
@@ -198,11 +206,11 @@ export class ShaderScene extends CGFscene {
 	// called periodically (as per setUpdatePeriod() in init())
 	update(t) {
 		// only shader 6 is using time factor
-		if (this.selectedExampleShader == 6)
+		if (this.selectedExampleShader == 6 || this.selectedExampleShader == 10)
 			// Dividing the time by 100 "slows down" the variation (i.e. in 100 ms timeFactor increases 1 unit).
 			// Doing the modulus (%) by 100 makes the timeFactor loop between 0 and 99
 			// ( so the loop period of timeFactor is 100 times 100 ms = 10s ; the actual animation loop depends on how timeFactor is used in the shader )
-			this.testShaders[6].setUniformsValues({ timeFactor: t / 100 % 100 });
+			this.testShaders[this.selectedExampleShader].setUniformsValues({ timeFactor: t / 100 % 100 });
 	}
 
 	// main display function
