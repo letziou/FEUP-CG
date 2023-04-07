@@ -6,15 +6,18 @@ import {CGFobject} from '../lib/CGF.js';
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions ajg the Y axis
  * @param radius - scale of sphere that functions as radius
+ * @param inverted - Flag indicating whether to invert the faces of sphere
 */
 export class MySphere extends CGFobject {
-  constructor(scene, slices, stacks, radius) {
+  constructor(scene, slices, stacks, radius, inverted) {
       super(scene);
 
       this.stacks = stacks * 2;
       this.slices = slices;
 
       this.radius = radius;
+      
+      this.inverted = inverted;
 
       this.initBuffers();
   }
@@ -58,6 +61,11 @@ export class MySphere extends CGFobject {
                   y: y/(b*b),
                   z: z/(c*c)
               };
+              if (this.inverted) {
+                n.x *= -1;
+                n.y *= -1;
+                n.z *= -1;
+              }
               let r = Math.sqrt(n.x*n.x + n.y*n.y + n.z*n.z)
               this.normals.push(n.x/r, n.y/r, n.z/r);
 
@@ -71,8 +79,15 @@ export class MySphere extends CGFobject {
                   // pushing two triangles using indices from this round (current, current+1)
                   // and the ones directly south (next, next+1)
                   // (i.e. one full round of slices ahead)
-                  this.indices.push(current + 1, current, next);
-                  this.indices.push(current + 1, next, next + 1);
+                  
+                  if(this.inverted) {
+                    this.indices.push(current, current + 1, next);
+                    this.indices.push(next, current + 1, next + 1);
+                  }
+                  else {
+                    this.indices.push(current + 1, current, next);
+                    this.indices.push(current + 1, next, next + 1);
+                  }
               }
           }
       }

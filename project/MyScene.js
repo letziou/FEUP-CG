@@ -40,10 +40,11 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
-    this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200);
+    this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
+    this.displaySphere = true;
     this.scaleFactor = 1;
 
     this.enableTextures(true);
@@ -85,7 +86,8 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-    this.panorama.display();
+    if(this.displaySphere)
+      this.panorama.display();
 
     this.pushMatrix();
     this.appearance.apply();

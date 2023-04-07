@@ -5,12 +5,13 @@ import { MySphere } from './MySphere.js';
 * @constructor
  * @param scene - Reference to MyScene object
  * @param panorama - Reference to texture object
+ * @param inverted - Flag indicating whether to invert the faces of sphere
 */
 export class MyPanorama extends CGFobject {
-  constructor(scene, panorama, slices, stacks, radius){
+  constructor(scene, panorama, slices, stacks, radius, inverted){
     super(scene);
 
-    this.sphere = new MySphere(scene, slices, stacks, radius);
+    this.sphere = new MySphere(scene, slices, stacks, radius, inverted);
     this.panorama = panorama;
 
     this.initMaterials(scene, panorama);
