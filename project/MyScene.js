@@ -1,6 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
+import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
-import { MySphere } from "./MySphere.js";
 
 /**
  * MyScene
@@ -24,17 +24,7 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-    //Initialize scene objects
-    this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
-    this.sphere = new MySphere(this, 50, 25, 20);
-
-    //Objects connected to MyInterface
-    this.displayAxis = true;
-    this.scaleFactor = 1;
-
-    this.enableTextures(true);
-
+    //Textures
     this.texture1 = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture1);
@@ -44,6 +34,19 @@ export class MyScene extends CGFscene {
     this.earth = new CGFappearance(this);
     this.earth.setTexture(this.texture2);
     this.earth.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.texture3 = "images/panorama4.jpg";
+
+    //Initialize scene objects
+    this.axis = new CGFaxis(this);
+    this.plane = new MyPlane(this,30);
+    this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200);
+
+    //Objects connected to MyInterface
+    this.displayAxis = true;
+    this.scaleFactor = 1;
+
+    this.enableTextures(true);
 
   }
   initLights() {
@@ -82,9 +85,7 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // ---- BEGIN Primitive drawing section
-
-    this.earth.apply();
-    this.sphere.display();
+    this.panorama.display();
 
     this.pushMatrix();
     this.appearance.apply();
