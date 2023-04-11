@@ -1,4 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
+import { MyBirdHead } from "./MyBirdHead.js";
+import { MyBirdBeak } from "./MyBirdBeak.js"
 import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
 
@@ -15,6 +17,7 @@ export class MyScene extends CGFscene {
     
     this.initCameras();
     this.initLights();
+    this.initMaterials();
 
     //Background color
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -41,6 +44,8 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
+    this.head = new MyBirdHead(this, 50, 25, 1, false);
+    this.beak = new MyBirdBeak(this, 4, 4);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -71,6 +76,15 @@ export class MyScene extends CGFscene {
     this.setSpecular(0.2, 0.4, 0.8, 1.0);
     this.setShininess(10.0);
   }
+
+  initMaterials(){
+    this.orange = new CGFappearance(this);
+    this.orange.setAmbient(0.1,0.1,0.1,1.0);
+    this.orange.setDiffuse(0.7,0.647*0.7,0,1.0);
+    this.orange.setSpecular(1,1,1,0);
+    this.orange.setShininess(10.0);
+  }
+
   display() {
     // ---- BEGIN Background, camera and axis setup
     // Clear image and depth buffer everytime we update the scene
@@ -96,6 +110,16 @@ export class MyScene extends CGFscene {
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
     this.popMatrix();
+
+    this.pushMatrix();
+    this.orange.apply();
+    this.rotate(-Math.PI/2.0,-1,0,0);
+    this.translate(0,0.9,0);
+    this.beak.display();
+    this.popMatrix();
+
+    this.head.display();  
+
 
     // ---- END Primitive drawing section
   }

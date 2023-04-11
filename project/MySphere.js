@@ -4,7 +4,7 @@ import {CGFobject} from '../lib/CGF.js';
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
- * @param stacks - number of divisions ajg the Y axis
+ * @param stacks - number of divisions around the Y axis
  * @param radius - scale of sphere that functions as radius
  * @param inverted - Flag indicating whether to invert the faces of sphere
 */

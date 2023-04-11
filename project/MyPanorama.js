@@ -5,6 +5,9 @@ import { MySphere } from './MySphere.js';
 * @constructor
  * @param scene - Reference to MyScene object
  * @param panorama - Reference to texture object
+ * @param slices - number of divisions around the Y axis
+ * @param stacks - number of divisions around the Y axis
+ * @param radius - scale of sphere that functions as radius
  * @param inverted - Flag indicating whether to invert the faces of sphere
 */
 export class MyPanorama extends CGFobject {
@@ -29,6 +32,7 @@ export class MyPanorama extends CGFobject {
 
   display(){
     this.texture.apply();
+    //this.scene.translate(this.scene.camera.position[0], this.scene.camera.position[1], this.scene.camera.position[2]);
     this.sphere.display();
   }
 }
