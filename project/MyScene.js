@@ -3,6 +3,7 @@ import { MyBirdHead } from "./MyBirdHead.js";
 import { MyBirdBeak } from "./MyBirdBeak.js"
 import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyBirdEye } from "./MyBirdEye.js";
 
 /**
  * MyScene
@@ -46,6 +47,7 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
     this.head = new MyBirdHead(this, 50, 25, 1, false);
     this.beak = new MyBirdBeak(this, 4, 4);
+    this.leftEye = new MyBirdEye(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -111,6 +113,11 @@ export class MyScene extends CGFscene {
     this.plane.display();
     this.popMatrix();
 
+
+    // for MyBird
+
+    this.head.display();  
+
     this.pushMatrix();
     this.orange.apply();
     this.rotate(-Math.PI/2.0,-1,0,0);
@@ -118,9 +125,12 @@ export class MyScene extends CGFscene {
     this.beak.display();
     this.popMatrix();
 
-    this.head.display();  
-
-
+    this.pushMatrix();
+    this.rotate(-Math.PI/2.0,-1,0,0);
+    this.translate(1,0,0);
+    this.leftEye.display();
+    this.popMatrix();
+    
     // ---- END Primitive drawing section
   }
 }
