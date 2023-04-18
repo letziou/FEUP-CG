@@ -1,6 +1,10 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
+import { MyBirdBody } from "./MyBirdBody.js";
+import { MyBirdBodyTail } from "./MyBirdBodyTail.js";
+import { MyBirdHead } from "./MyBirdHead.js";
+import { MyBird } from "./MyBird.js";
 
 /**
  * MyScene
@@ -41,6 +45,12 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
+
+    this.bird = new MyBird(this);
+    
+    //this.birdbody = new MyBirdBody(this, 20, 20);
+    //this.birdbodytail = new MyBirdBodyTail(this, 1000, 20);
+    //this.birdhead = new MyBirdHead(this, 50, 25, .5, false);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -85,17 +95,25 @@ export class MyScene extends CGFscene {
     // Draw axis
     if (this.displayAxis) this.axis.display();
 
+    //this.birdhead.display();
+    //this.birdbody.display();
+    //this.birdbodytail.display();
+    
+    this.bird.display();
+
     // ---- BEGIN Primitive drawing section
     if(this.displaySphere)
       this.panorama.display();
-
+    
     this.pushMatrix();
     this.appearance.apply();
     this.translate(0,-100,0);
     this.scale(400,400,400);
     this.rotate(-Math.PI/2.0,1,0,0);
     this.plane.display();
+    
     this.popMatrix();
+    
 
     // ---- END Primitive drawing section
   }
