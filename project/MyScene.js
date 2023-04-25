@@ -28,6 +28,8 @@ export class MyScene extends CGFscene {
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
+    this.setUpdatePeriod(1000/60);
+
     //Textures
     this.texture1 = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
@@ -117,4 +119,34 @@ export class MyScene extends CGFscene {
 
     // ---- END Primitive drawing section
   }
+
+  checkKeys(){
+    var text = "Keys Pressed ";
+    var isKeyPressed = false;
+
+    if(this.gui.isKeyPressed("KeyW")) {
+      text += " W ";
+      isKeyPressed = true;
+    }
+
+    if(this.gui.isKeyPressed("KeyS")) {
+      text += " S ";
+      isKeyPressed = true;
+    }
+
+    if(isKeyPressed) {
+      console.log(text);
+    }
+  }
+
+  update(t) {
+    if (this.lastUpdate === 0)
+        this.lastUpdate = t;
+    let elapsedTime = t - this.lastUpdate;
+    this.lastUpdate = t;
+
+    this.checkKeys();
+
+       this.timeAfterLastSupply += elapsedTime;
+}
 }
