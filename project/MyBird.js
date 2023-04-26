@@ -18,7 +18,54 @@ export class MyBird extends CGFobject {
 
         this.initMaterials(scene);
 
+        this.scene = scene;
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.rotation = 0;
+        this.speed = 0.1;
+        this.minSpeed = 0.05;
+        this.maxSpeed = 0.2;
     }
+
+    update() {
+        if (this.scene.gui.isKeyPressed("KeyW")) {
+            this.z += this.speed;
+        }
+
+        if (this.scene.gui.isKeyPressed("KeyS")) {
+            this.z -= this.speed;
+        }
+
+        if (this.scene.gui.isKeyPressed("KeyA")) {
+            this.rotation += Math.PI / 180;
+        }
+
+        if (this.scene.gui.isKeyPressed("KeyD")) {
+            this.rotation -= Math.PI / 180;
+        }
+    }
+
+    increaseSpeed() {
+        if (this.speed < this.maxSpeed) {
+            this.speed += 0.01;
+        }
+    }
+
+    decreaseSpeed() {
+        if (this.speed > this.minSpeed) {
+            this.speed -= 0.01;
+        }
+    }
+
+    turn(direction) {
+        if (direction == 'left') {
+            this.rotation += this.turningSpeed;
+        } else if (direction == 'right') {
+            this.rotation -= this.turningSpeed;
+        }
+    }
+    
 
     initMaterials(scene){
         this.red = new CGFappearance(scene);
@@ -32,6 +79,12 @@ export class MyBird extends CGFobject {
         this.yellow.setDiffuse(0.7,0.7,0,1.0);
         this.yellow.setSpecular(.6,.6,.6,0);
         this.yellow.setShininess(10.0);
+        
+        this.black = new CGFappearance(scene);
+        this.black.setAmbient(0.0, 0.0, 0.0, 1.0);
+        this.black.setDiffuse(0.0, 0.0, 0.0, 1.0);
+        this.black.setSpecular(0.0, 0.0, 0.0, 1.0);
+        this.black.setShininess(1.0);
     }
 
     display() {
@@ -47,14 +100,14 @@ export class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.translate(.23, .7, 1.1);
         this.scene.scale(.1, .1, .1);
-        this.red.apply();
+        this.black.apply();
         this.birdhead.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.scene.translate(-.23, .7, 1.1);
         this.scene.scale(.1, .1, .1);
-        this.red.apply();
+        this.black.apply();
         this.birdhead.display();
         this.scene.popMatrix();
 
@@ -138,7 +191,8 @@ export class MyBird extends CGFobject {
         this.birdtail.display();
         this.scene.popMatrix();
     }
-
+}
+/*
     enableNormalViz() {
         this.birdhead.enableNormalViz(); 
         this.birdbody.enableNormalViz();
@@ -154,4 +208,4 @@ export class MyBird extends CGFobject {
         this.birdwing.disableNormalViz();
         this.birdtail.disableNormalViz();
     }
-}
+    */
