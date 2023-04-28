@@ -41,22 +41,8 @@ export class MyBird extends CGFobject {
         this.maxVerticalMoveSpeed = 0.2;
     }
 
-    update() {
-        if (this.scene.gui.isKeyPressed("KeyW")) {
-            this.moveSpeed += this.acceleration;
-            if (this.moveSpeed > this.maxMoveSpeed) {
-                this.moveSpeed = this.maxMoveSpeed;
-            }
-        }
-    
-        if (this.scene.gui.isKeyPressed("KeyS")) {
-            this.moveSpeed -= this.deceleration;
-            if (this.moveSpeed < this.minMoveSpeed) {
-                this.moveSpeed = this.minMoveSpeed;
-            }
-        }
-    
-        if (this.scene.gui.isKeyPressed("KeyA")) {
+    turn(val) {
+        if (val == 1) {
             this.rotation += Math.PI / 45 * this.rotationSpeed;
             this.tailRotation = Math.max(this.tailRotation - 0.05, -0.5);
             this.headRotation = Math.min(this.headRotation + 0.05, -0.2);
@@ -64,8 +50,8 @@ export class MyBird extends CGFobject {
             this.tailRotation *= 0.9;
             this.headRotation *= 0.9;
         }
-    
-        if (this.scene.gui.isKeyPressed("KeyD")) {
+
+        if (val == -1) {
             this.rotation -= Math.PI / 45 * this.rotationSpeed;
             this.tailRotation = Math.min(this.tailRotation + 0.05, 0.5);
             this.headRotation = Math.max(this.headRotation - 0.05, 0.2);
@@ -73,16 +59,55 @@ export class MyBird extends CGFobject {
             this.tailRotation *= 0.9;
             this.headRotation *= 0.9;
         }
+    }
+
+    accelerate(val) {
+        if(val == 1){
+        this.moveSpeed += this.acceleration;
+            if (this.moveSpeed > this.maxMoveSpeed) {
+                this.moveSpeed = this.maxMoveSpeed;
+            }
+        }
+
+        if(val == 0){
+        this.moveSpeed -= this.deceleration;
+            if (this.moveSpeed < this.minMoveSpeed) {
+                this.moveSpeed = this.minMoveSpeed;
+            }
+        }
+    }
+
+    update() {
+        var val; 
+        this.sineWaveTime += 0.05 * (2 + this.moveSpeed);
         
+        if (this.scene.gui.isKeyPressed("KeyW")) {
+            val = 1;
+            this.accelerate(val);
+        }
+    
+        if (this.scene.gui.isKeyPressed("KeyS")) {
+            val = 0;
+            this.accelerate(val);
+        }
+    
+        if (this.scene.gui.isKeyPressed("KeyA")) {
+            val = 1;
+            this.turn(val);
+        }
+    
+        if (this.scene.gui.isKeyPressed("KeyD")) {
+            val = -1;
+            this.turn(val);
+        }
+
         this.x += this.moveSpeed * Math.sin(this.rotation);
         this.z += this.moveSpeed * Math.cos(this.rotation);
         this.y += 0.05 * Math.sin(this.sineWaveTime);
 
-        this.sineWaveTime += 0.05 * (2 + this.moveSpeed);
-
         if(this.moveSpeed > 0){
-            this.wingAngle = -0.3 * Math.sin(this.moveSpeed * this.sineWaveTime);
-            console.log('wing: ' + this.moveSpeed);
+            this.wingAngle = 0.3 * Math.sin(this.moveSpeed * this.sineWaveTime);
+            //console.log('wing: ' + this.moveSpeed);
         }else{
             this.wingAngle = 0.3 * Math.sin(this.sineWaveTime);
         }
