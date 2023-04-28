@@ -46,18 +46,12 @@ export class MyBird extends CGFobject {
             this.rotation += Math.PI / 45 * this.rotationSpeed;
             this.tailRotation = Math.max(this.tailRotation - 0.05, -0.5);
             this.headRotation = Math.min(this.headRotation + 0.05, -0.2);
-        } else {
-            this.tailRotation *= 0.9;
-            this.headRotation *= 0.9;
         }
 
         if (val == -1) {
             this.rotation -= Math.PI / 45 * this.rotationSpeed;
             this.tailRotation = Math.min(this.tailRotation + 0.05, 0.5);
             this.headRotation = Math.max(this.headRotation - 0.05, 0.2);
-        } else {
-            this.tailRotation *= 0.9;
-            this.headRotation *= 0.9;
         }
     }
 
@@ -94,11 +88,17 @@ export class MyBird extends CGFobject {
         if (this.scene.gui.isKeyPressed("KeyA")) {
             val = 1;
             this.turn(val);
+        } else {
+            this.tailRotation *= 0.9;
+            this.headRotation *= 0.9;
         }
     
         if (this.scene.gui.isKeyPressed("KeyD")) {
             val = -1;
             this.turn(val);
+        } else {
+            this.tailRotation *= 0.9;
+            this.headRotation *= 0.9;
         }
 
         this.x += this.moveSpeed * Math.sin(this.rotation);
