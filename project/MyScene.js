@@ -13,6 +13,7 @@ export class MyScene extends CGFscene {
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
   }
+
   init(application) {
     super.init(application);
     
@@ -54,14 +55,15 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
 
     this.enableTextures(true);
-
   }
+
   initLights() {
     this.lights[0].setPosition(15, 0, 5, 1);
     this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
     this.lights[0].enable();
     this.lights[0].update();
   }
+
   initCameras() {
     this.camera = new CGFcamera(
       1.0,
@@ -80,85 +82,65 @@ export class MyScene extends CGFscene {
   }
 
   display() {
-  // ---- BEGIN Background, camera and axis setup
-  // Clear image and depth buffer everytime we update the scene
-  this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
-  this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-  // Initialize Model-View matrix as identity (no transformation
-  this.updateProjectionMatrix();
-  this.loadIdentity();
-  // Apply transformations corresponding to the camera position relative to the origin
-  this.applyViewMatrix();
+    // ---- BEGIN Background, camera and axis setup
+    // Clear image and depth buffer everytime we update the scene
+    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+    this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    // Initialize Model-View matrix as identity (no transformation
+    this.updateProjectionMatrix();
+    this.loadIdentity();
+    // Apply transformations corresponding to the camera position relative to the origin
+    this.applyViewMatrix();
 
-  // Draw axis
-  if (this.displayAxis) this.axis.display();
+    // Draw axis
+    if (this.displayAxis) this.axis.display();
 
-  // Push new matrix and translate it by the bird position
-  this.pushMatrix();
-  this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
-  this.bird.display();
-  this.popMatrix();
+    // Push new matrix and translate it by the bird position
+    this.pushMatrix();
+    this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
+    this.rotate(this.bird.rotation, 0, 1, 0);
+    this.bird.display();
+    this.popMatrix();
 
-  // ---- BEGIN Primitive drawing section
-  if (this.displaySphere) this.panorama.display();
+    // ---- BEGIN Primitive drawing section
+    if (this.displaySphere) this.panorama.display();
 
-  this.pushMatrix();
-  this.appearance.apply();
-  this.translate(0, -100, 0);
-  this.scale(400, 400, 400);
-  this.rotate(-Math.PI / 2.0, 1, 0, 0);
-  this.plane.display();
-
-  this.popMatrix();
-  // ---- END Primitive drawing section
-}
-
-
-checkKeys(){
-  if(this.gui.isKeyPressed("KeyS")) {
-    this.birdSpeed += 0.05;
+    this.pushMatrix();
+    this.appearance.apply();
+    this.translate(0, -100, 0);
+    this.scale(400, 400, 400);
+    this.rotate(-Math.PI / 2.0, 1, 0, 0);
+    this.plane.display();
+    
+    this.popMatrix();
+    // ---- END Primitive drawing section
   }
 
-  if(this.gui.isKeyPressed("KeyW")) {
-    this.birdSpeed -= 0.05;
-  }
+  checkKeys() {
+    if (this.gui.isKeyPressed("KeyS")) {
+        this.birdSpeed += 0.05;
+        if (this.birdSpeed > 0) {
+            this.birdSpeed = 0;
+        }
+    }
 
-  if(this.gui.isKeyPressed("KeyD")) {
-    this.birdPosition.x -= 0.5;
-  }
+    if (this.gui.isKeyPressed("KeyW")) {
+        this.birdSpeed -= 0.05;
+    }
 
-  if(this.gui.isKeyPressed("KeyA")) {
-    this.birdPosition.x += 0.5;
+    if (this.gui.isKeyPressed("KeyR")) {
+      this.bird.resetPosition();
+    }
   }
-}
 
   update(t) {
-    if (this.lastUpdate === 0) this.lastUpdate = t;
-    let elapsedTime = t - this.lastUpdate;
-    this.lastUpdate = t;
-
+    this.deltaTime = t;
     this.checkKeys();
-
-    this.bird.update(elapsedTime, this.birdSpeed);
-
+    this.bird.update();
+    
     // Update bird position
-    let distance = this.birdSpeed * elapsedTime / 1000;
-    this.birdPosition.z -= distance;
+    this.birdPosition.x = this.bird.x;
+    this.birdPosition.y = this.bird.y;
+    this.birdPosition.z = this.bird.z;
   }
 }
-
-/*
-    update(t) {
-    if (this.lastUpdate === 0) this.lastUpdate = t;
-    let elapsedTime = t - this.lastUpdate;
-    this.lastUpdate = t;
-  
-    this.checkKeys();
-  
-    this.bird.update(elapsedTime, this.birdSpeed);
-  
-    // Update bird position
-    let distance = this.birdSpeed * elapsedTime / 1000;
-    this.birdPosition.z -= distance;
-  }
-*/
