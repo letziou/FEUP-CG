@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
 import { MyBird } from "./MyBird.js";
+import { MyBirdEgg } from "./MyBirdEgg.js";
 
 /**
  * MyScene
@@ -47,6 +48,7 @@ export class MyScene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.plane = new MyPlane(this,30);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
+    this.egg = new MyBirdEgg(this, 50, 25, 2, false);
 
     this.bird = new MyBird(this);
     
