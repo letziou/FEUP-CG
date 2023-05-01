@@ -3,6 +3,7 @@ import { MyPanorama } from "./MyPanorama.js";
 import { MyPlane } from "./MyPlane.js";
 import { MyBird } from "./MyBird.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
+import { MyNest } from "./MyNest.js";
 
 /**
  * MyScene
@@ -49,6 +50,7 @@ export class MyScene extends CGFscene {
     this.plane = new MyPlane(this,30);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
     this.egg = new MyBirdEgg(this, 50, 25, 2, false);
+    this.nest = new MyNest(this);
 
     this.bird = new MyBird(this);
     
@@ -98,6 +100,10 @@ export class MyScene extends CGFscene {
     if (this.displayAxis) this.axis.display();
 
     // Push new matrix and translate it by the bird position
+    this.pushMatrix();
+    this.nest.display();
+    this.popMatrix();
+
     this.pushMatrix();
     this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
     this.rotate(this.bird.rotation, 0, 1, 0);
