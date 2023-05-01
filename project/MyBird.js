@@ -122,12 +122,6 @@ export class MyBird extends CGFobject {
       }
       
     initMaterials(scene){
-        this.red = new CGFappearance(scene);
-        this.red.setAmbient(0.5,0.5,0.5,1.0);
-        this.red.setDiffuse(0.7,0,0,1.0);
-        this.red.setSpecular(0.4,0.4,0.4,0);
-        this.red.setShininess(10.0);
-
         this.yellow = new CGFappearance(scene);
         this.yellow.setAmbient(0.1,0.1,0.1,1.0);
         this.yellow.setDiffuse(0.7,0.7,0,1.0);
@@ -191,7 +185,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI+Math.PI/2, -1, 0, 0);
         this.scene.translate(0, .5, 0);
         this.scene.scale(.816, .2, .816);
-        this.feather1.apply();
+        this.feather2.apply();
         this.birdbodytail.display();
         this.scene.popMatrix();
 
