@@ -120,14 +120,14 @@ export class MyScene extends CGFscene {
 
   checkKeys() {
     if (this.gui.isKeyPressed("KeyS")) {
-        this.birdSpeed += 0.05 * speedFactor;
+        this.birdSpeed += 0.05 * this.speedFactor;
         if (this.birdSpeed > 0) {
             this.birdSpeed = 0;
         }
     }
 
     if (this.gui.isKeyPressed("KeyW")) {
-        this.birdSpeed -= 0.05 * speedFactor;
+        this.birdSpeed -= 0.05 * this.speedFactor;
     }
 
     if (this.gui.isKeyPressed("KeyR")) {
