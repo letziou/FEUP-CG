@@ -1,6 +1,6 @@
 import {CGFobject} from '../lib/CGF.js';
 /**
-* MyPyramid
+* MyBirdBodyTail
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
