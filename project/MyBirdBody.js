@@ -16,6 +16,7 @@ export class MyBirdBody extends CGFobject {
         this.vertices =[];
         this.indices=[];
         this.normals=[];
+        this.texCoords=[];
 
         // Divide the circle by number of slices
         var ang=2*Math.PI/this.slices;
@@ -38,6 +39,14 @@ export class MyBirdBody extends CGFobject {
         for (let i =0; i < totalPoints; i+=2 ) {
             this.indices.push(i, i+1, i+1+this.slices*2);
             this.indices.push(i, i+1+this.slices*2, i+this.slices*2);
+        }
+
+        // Define texture coordinates for each vertex
+        for (let j = 0; j <= this.stacks; j++) {
+            for (let i = 0; i < this.slices; i++) {
+                this.texCoords.push(i / this.slices, j / this.stacks);
+                this.texCoords.push((i + 1) / this.slices, j / this.stacks);
+            }
         }
     
         //The defined indices (and corresponding vertices)
