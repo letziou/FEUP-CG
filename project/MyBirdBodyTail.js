@@ -1,6 +1,6 @@
 import {CGFobject} from '../lib/CGF.js';
 /**
-* MyPyramid
+* MyBirdBodyTail
 * @constructor
  * @param scene - Reference to MyScene object
  * @param slices - number of divisions around the Y axis
@@ -17,6 +17,7 @@ export class MyBirdBodyTail extends CGFobject {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
+        this.texCoords = [];
 
         var ang = 0;
         var alphaAng = 2*Math.PI/this.slices;
@@ -34,6 +35,10 @@ export class MyBirdBodyTail extends CGFobject {
             this.vertices.push(0,2,0);
             this.vertices.push(.5*ca, 0, -.5*sa);
             this.vertices.push(.5*caa, 0, -.5*saa);
+
+            this.texCoords.push(0.5, 0.5);
+            this.texCoords.push(1, 1);
+            this.texCoords.push(0, 1);
 
             // triangle normal computed by cross product of two edges
             var normal= [

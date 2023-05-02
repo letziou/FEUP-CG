@@ -1,6 +1,6 @@
 import {CGFobject} from '../lib/CGF.js';
 /**
- * MyParallelogram
+ * MyBirdWing
  * @constructor
  * @param scene - Reference to MyScene object
  */
@@ -24,6 +24,15 @@ export class MyBirdWing extends CGFobject {
 		this.indices = [
 			0, 1, 2, 3, 4, 3, 2, 1, 0,
 		];
+
+		this.texCoords = [
+			0, 0,
+			1, 0,
+			1, 1,
+			2, 0,
+			2, 1,
+			3, 1,
+	];
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles

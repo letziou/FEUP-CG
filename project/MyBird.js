@@ -122,12 +122,6 @@ export class MyBird extends CGFobject {
       }
       
     initMaterials(scene){
-        this.red = new CGFappearance(scene);
-        this.red.setAmbient(0.5,0.5,0.5,1.0);
-        this.red.setDiffuse(0.7,0,0,1.0);
-        this.red.setSpecular(0.4,0.4,0.4,0);
-        this.red.setShininess(10.0);
-
         this.yellow = new CGFappearance(scene);
         this.yellow.setAmbient(0.1,0.1,0.1,1.0);
         this.yellow.setDiffuse(0.7,0.7,0,1.0);
@@ -139,6 +133,24 @@ export class MyBird extends CGFobject {
         this.black.setDiffuse(0.0, 0.0, 0.0, 1.0);
         this.black.setSpecular(0.0, 0.0, 0.0, 1.0);
         this.black.setShininess(1.0);
+
+        this.imgFeather1 = 'images/feather.jpg';
+        this.feather1 = new CGFappearance(scene);
+        this.feather1.setAmbient(0.1, 0.1, 0.1, 1);
+        this.feather1.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.feather1.setSpecular(0.1, 0.1, 0.1, 1);
+        this.feather1.setShininess(10.0);
+        this.feather1.loadTexture(this.imgFeather1);
+        this.feather1.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.imgFeather2 = 'images/feather2.jpg'
+        this.feather2 = new CGFappearance(scene);
+        this.feather2.setAmbient(0.1, 0.1, 0.1, 1);
+        this.feather2.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.feather2.setSpecular(0.1, 0.1, 0.1, 1);
+        this.feather2.setShininess(10.0);
+        this.feather2.loadTexture(this.imgFeather2);
+        this.feather2.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     display() {
@@ -147,7 +159,7 @@ export class MyBird extends CGFobject {
         this.scene.translate(0, .4, 1);
         this.scene.scale(.8, .8, .8);
         this.scene.rotate(this.headRotation, 0, 0, 1);
-        this.red.apply();
+        this.feather1.apply();
         this.birdhead.display();
         this.scene.popMatrix();
 
@@ -173,7 +185,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI+Math.PI/2, -1, 0, 0);
         this.scene.translate(0, .5, 0);
         this.scene.scale(.816, .2, .816);
-        this.red.apply();
+        this.feather2.apply();
         this.birdbodytail.display();
         this.scene.popMatrix();
 
@@ -190,7 +202,7 @@ export class MyBird extends CGFobject {
         //Body
         this.scene.pushMatrix();
         this.scene.translate(0, 0, .2);
-        this.red.apply();
+        this.feather1.apply();
         this.birdhead.display();
         this.scene.popMatrix();
 
@@ -198,7 +210,7 @@ export class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.scale(.9, .5, .9);
-        this.red.apply();
+        this.feather2.apply();
         this.birdbodytail.display();
         this.scene.popMatrix();
 
@@ -209,7 +221,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI/8, 0, -1, 0);
         this.scene.translate(0, -.5, .3);
         this.scene.scale(.5, .5, 0);
-        this.red.apply();
+        this.feather1.apply();
         this.birdwing.display();
         this.scene.popMatrix();
         //Tip
@@ -219,7 +231,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.translate(-1.8, -.5, -.658);
         this.scene.scale(.5, .5, 0);
-        this.red.apply();
+        this.feather1.apply();
         this.birdwing.display();
         this.scene.popMatrix();
         
@@ -231,7 +243,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.translate(0, -.5, -.3);
         this.scene.scale(.5, .5, 0);
-        this.red.apply();
+        this.feather1.apply();
         this.birdwing.display();
         this.scene.popMatrix();
         //Tip
@@ -240,7 +252,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.translate(-1.8, -.5, .658);
         this.scene.scale(.5, .5, 0);
-        this.red.apply();
+        this.feather2.apply();
         this.birdwing.display();
         this.scene.popMatrix();
 
@@ -250,7 +262,7 @@ export class MyBird extends CGFobject {
         this.scene.rotate(this.tailRotation, 0, 1, 0);
         this.scene.scale(0.5, 0.5, 0);
         this.scene.translate(0, -2, 0);
-        this.red.apply();
+        this.feather1.apply();
         this.birdtail.display();
         this.scene.popMatrix();
     }

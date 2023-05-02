@@ -53,6 +53,7 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.displaySphere = true;
     this.scaleFactor = 1;
+    this.speedFactor = 1;
 
     this.enableTextures(true);
   }
@@ -99,6 +100,7 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
     this.rotate(this.bird.rotation, 0, 1, 0);
+    this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.bird.display();
     this.popMatrix();
 
@@ -118,14 +120,14 @@ export class MyScene extends CGFscene {
 
   checkKeys() {
     if (this.gui.isKeyPressed("KeyS")) {
-        this.birdSpeed += 0.05;
+        this.birdSpeed += 0.05 * this.speedFactor;
         if (this.birdSpeed > 0) {
             this.birdSpeed = 0;
         }
     }
 
     if (this.gui.isKeyPressed("KeyW")) {
-        this.birdSpeed -= 0.05;
+        this.birdSpeed -= 0.05 * this.speedFactor;
     }
 
     if (this.gui.isKeyPressed("KeyR")) {
