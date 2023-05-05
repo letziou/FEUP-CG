@@ -23,6 +23,7 @@ export class MyBird extends CGFobject {
         this.wingAngle = 0;
         this.tailRotation = 0;
         this.headRotation = 0;
+        this.wingRotation = 0;
 
         this.scene = scene;
         this.x = 0;
@@ -69,20 +70,34 @@ export class MyBird extends CGFobject {
                 this.moveSpeed = this.minMoveSpeed;
             }
         }
+
+        if (val == 1) {
+            this.wingRotation = Math.min(this.wingRotation + 0.05, 0.5);
+        } else if (val == 0) {
+            this.wingRotation = Math.max(this.wingRotation - 0.05, -0.5);
+        }
     }
 
     update() {
         var val; 
         this.sineWaveTime += 0.05 * (2 + this.moveSpeed);
+
+        if(this.moveSpeed == 0){
+            this.wingAngle = 0.3 * Math.sin(this.sineWaveTime * 6);
+        }else{
+            this.wingAngle = 0.3 * Math.sin(this.sineWaveTime / this.moveSpeed); // arranjar movespeed para que quanto menos for, mair a frequencia do bater de asas
+        }
         
         if (this.scene.gui.isKeyPressed("KeyW")) {
             val = 1;
             this.accelerate(val);
+            this.wingAngle = 0.3 * Math.sin(this.sineWaveTime * 5);
         }
     
         if (this.scene.gui.isKeyPressed("KeyS")) {
             val = 0;
             this.accelerate(val);
+            this.wingAngle = 0.3 * Math.sin(this.sineWaveTime * 5);
         }
     
         if (this.scene.gui.isKeyPressed("KeyA")) {
@@ -105,11 +120,12 @@ export class MyBird extends CGFobject {
         this.z += this.moveSpeed * Math.cos(this.rotation);
         this.y += 0.05 * Math.sin(this.sineWaveTime);
 
-        if(this.moveSpeed > 0){
-            this.wingAngle = 0.3 * Math.sin(this.moveSpeed * this.sineWaveTime);
-            //console.log('wing: ' + this.moveSpeed);
-        }else{
-            this.wingAngle = 0.3 * Math.sin(this.sineWaveTime);
+        if (!this.scene.gui.isKeyPressed("KeyW") && !this.scene.gui.isKeyPressed("KeyS")) {
+            if (this.wingRotation > 0) {
+                this.wingRotation = Math.max(this.wingRotation - 0.05, 0);
+            } else if (this.wingRotation < 0) {
+                this.wingRotation = Math.min(this.wingRotation + 0.05, 0);
+            }
         }
     }
 
@@ -217,6 +233,7 @@ export class MyBird extends CGFobject {
         //wing Left
         this.scene.pushMatrix();
         this.scene.rotate(this.wingAngle, 0, 0, 1); // Apply the wing angle rotation
+        this.scene.rotate(this.wingRotation, 1, 0, 0); // Apply the wing rotation
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.rotate(Math.PI/8, 0, -1, 0);
         this.scene.translate(0, -.5, .3);
@@ -227,6 +244,7 @@ export class MyBird extends CGFobject {
         //Tip
         this.scene.pushMatrix();
         this.scene.rotate(this.wingAngle, 0, 0, 1); // Apply the wing angle rotation
+        this.scene.rotate(this.wingRotation, 1, 0, 0); // Apply the wing rotation
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.translate(-1.8, -.5, -.658);
@@ -238,6 +256,7 @@ export class MyBird extends CGFobject {
         //wing Right
         this.scene.pushMatrix();
         this.scene.rotate(-this.wingAngle, 0, 0, 1); // Apply the wing angle rotation with the opposite sign
+        this.scene.rotate(this.wingRotation, 1, 0, 0); // Apply the wing rotation
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.rotate(Math.PI/8, 0, 1, 0);
         this.scene.rotate(Math.PI, 0, 1, 0);
@@ -249,6 +268,7 @@ export class MyBird extends CGFobject {
         //Tip
         this.scene.pushMatrix();
         this.scene.rotate(-this.wingAngle, 0, 0, 1); // Apply the wing angle rotation with the opposite sign
+        this.scene.rotate(this.wingRotation, 1, 0, 0); // Apply the wing rotation
         this.scene.rotate(Math.PI/2, -1, 0, 0);
         this.scene.translate(-1.8, -.5, .658);
         this.scene.scale(.5, .5, 0);
