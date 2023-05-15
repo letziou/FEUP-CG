@@ -3,6 +3,7 @@ import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyTerrain } from "./MyTerrain.js";
 import { MyBillboard } from "./MyBillboard.js";
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 
 /**
  * MyScene
@@ -52,7 +53,9 @@ export class MyScene extends CGFscene {
 
     this.bird = new MyBird(this);
     
-    this.billboard = new MyBillboard(this, this.billboardTexture);
+    //this.billboard = new MyBillboard(this, this.billboardTexture);
+
+    this.treeGroupPatch = new MyTreeGroupPatch(this, this.billboardTexture);
     
     this.displayAxis = true;
     this.displaySphere = true;
@@ -120,7 +123,7 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
-    this.billboard.display(1,1,1);
+    this.treeGroupPatch.display();
     this.popMatrix();
     
     // ---- BEGIN Primitive drawing section
