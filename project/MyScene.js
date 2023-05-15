@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyTerrain } from "./MyTerrain.js";
+import { MyBillboard } from "./MyBillboard.js";
 
 /**
  * MyScene
@@ -48,6 +49,8 @@ export class MyScene extends CGFscene {
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
 
     this.bird = new MyBird(this);
+    
+    this.billboard = new MyBillboard(this);
     
     this.displayAxis = true;
     this.displaySphere = true;
@@ -111,6 +114,10 @@ export class MyScene extends CGFscene {
     this.bird.display();
     this.popMatrix();
 
+    this.pushMatrix();
+    this.billboard.display(1,1,1);
+    this.popMatrix();
+    
     // ---- BEGIN Primitive drawing section
     if (this.displaySphere) 
       this.panorama.display();
