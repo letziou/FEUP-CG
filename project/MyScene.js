@@ -44,13 +44,15 @@ export class MyScene extends CGFscene {
 
     this.texture3 = "images/panorama4.jpg";
 
+    this.billboardTexture = new CGFtexture(this, "images/billboardtree.png");
+
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
 
     this.bird = new MyBird(this);
     
-    this.billboard = new MyBillboard(this);
+    this.billboard = new MyBillboard(this, this.billboardTexture);
     
     this.displayAxis = true;
     this.displaySphere = true;
@@ -94,6 +96,9 @@ export class MyScene extends CGFscene {
     this.loadIdentity();
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
+
+    // Update the camera position
+    //this.camera.position = this.camera.getPosition();
 
     // Draw axis
     if (this.displayAxis) 
