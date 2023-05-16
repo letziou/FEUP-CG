@@ -1,6 +1,8 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
+import { MyBirdEgg } from "./MyBirdEgg.js";
+import { MyNest } from "./MyNest.js";
 import { MyTerrain } from "./MyTerrain.js";
 
 /**
@@ -12,6 +14,14 @@ export class MyScene extends CGFscene {
     super();
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
+    this.eggPosition = { x: 10, y: 0, z: 0};
+
+    this.birdDownTime = 1;
+    this.birdUpTime = 1;
+    this.birdMovingDown = false;
+    this.birdMovingUp = false;
+    this.birdMoveStartTime = 0;
+    this.birdMoveEndTime = 0;
   }
 
   init(application) {
@@ -46,6 +56,8 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
+    this.egg = new MyBirdEgg(this, 50, 25, 0.5, false);
+    this.nest = new MyNest(this);
 
     this.bird = new MyBird(this);
     
@@ -54,6 +66,10 @@ export class MyScene extends CGFscene {
     this.scaleFactor = 1;
     this.speedFactor = 1;
 
+    this.eggInBird = false;
+    this.keyPressedCount = 1;
+
+    this.enableTextures(true);
     this.terrain = new MyTerrain(this);
   }
 
@@ -105,6 +121,15 @@ export class MyScene extends CGFscene {
 
     // Push new matrix and translate it by the bird position
     this.pushMatrix();
+    this.nest.display();
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.translate(this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
+    this.egg.display();
+    this.popMatrix();
+
+    this.pushMatrix();
     this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
     this.rotate(this.bird.rotation, 0, 1, 0);
     this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
@@ -136,16 +161,36 @@ export class MyScene extends CGFscene {
     if (this.gui.isKeyPressed("KeyR")) {
       this.bird.resetPosition();
     }
+
+    if (this.gui.isKeyPressed("KeyP")) {
+      let distX = this.birdPosition.x - this.eggPosition.x;
+      let distY = this.birdPosition.y - this.eggPosition.y;
+      let distZ = this.birdPosition.z - this.eggPosition.z;
+      let distance = Math.sqrt(distX * distX + distY * distY + distZ * distZ);
+      
+      if(distance < 7)
+        this.eggInBird = true;
+    }
   }
 
   update(t) {
     this.deltaTime = t;
     this.checkKeys();
-    this.bird.update();
+    this.bird.update(t);
     
     // Update bird position
     this.birdPosition.x = this.bird.x;
     this.birdPosition.y = this.bird.y;
     this.birdPosition.z = this.bird.z;
+
+    if(this.eggInBird){
+      this.eggPosition.x = this.bird.x;
+      this.eggPosition.y = this.bird.y - 0.5; 
+      this.eggPosition.z = this.bird.z;
+    }
+
+    if (this.gui.isKeyPressed("KeyP")){
+      this.bird.down();
+    }
   }
 }
