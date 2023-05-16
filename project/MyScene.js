@@ -1,9 +1,9 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } from "../lib/CGF.js";
 import { MyPanorama } from "./MyPanorama.js";
-import { MyPlane } from "./MyPlane.js";
 import { MyBird } from "./MyBird.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
+import { MyTerrain } from "./MyTerrain.js";
 
 /**
  * MyScene
@@ -39,9 +39,9 @@ export class MyScene extends CGFscene {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.setUpdatePeriod(1000/60);
+    this.enableTextures(true);
 
     //Textures
-    this.texture1 = new CGFtexture(this, "images/terrain.jpg");
     this.appearance = new CGFappearance(this);
     this.appearance.setTexture(this.texture1);
     this.appearance.setTextureWrap('REPEAT', 'REPEAT');
@@ -55,7 +55,6 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.plane = new MyPlane(this,30);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
     this.egg = new MyBirdEgg(this, 50, 25, 0.5, false);
     this.nest = new MyNest(this);
@@ -65,11 +64,13 @@ export class MyScene extends CGFscene {
     this.displayAxis = true;
     this.displaySphere = true;
     this.scaleFactor = 1;
+    this.speedFactor = 1;
 
     this.eggInBird = false;
     this.keyPressedCount = 1;
 
     this.enableTextures(true);
+    this.terrain = new MyTerrain(this);
   }
 
   initLights() {
@@ -108,7 +109,15 @@ export class MyScene extends CGFscene {
     this.applyViewMatrix();
 
     // Draw axis
-    if (this.displayAxis) this.axis.display();
+    if (this.displayAxis) 
+      this.axis.display();
+  
+    this.pushMatrix();
+    this.translate(0, -100, 0);
+    this.scale(400, 400, 400);
+    this.rotate(-Math.PI / 2.0, 1, 0, 0);
+    this.terrain.display();
+    this.popMatrix();
 
     // Push new matrix and translate it by the bird position
     this.pushMatrix();
@@ -123,33 +132,30 @@ export class MyScene extends CGFscene {
     this.pushMatrix();
     this.translate(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
     this.rotate(this.bird.rotation, 0, 1, 0);
+    this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.bird.display();
     this.popMatrix();
 
     // ---- BEGIN Primitive drawing section
-    if (this.displaySphere) this.panorama.display();
+    if (this.displaySphere) 
+      this.panorama.display();
 
-    this.pushMatrix();
-    this.appearance.apply();
-    this.translate(0, -100, 0);
-    this.scale(400, 400, 400);
-    this.rotate(-Math.PI / 2.0, 1, 0, 0);
-    this.plane.display();
-    
-    this.popMatrix();
+    this.gl.activeTexture(this.gl.TEXTURE1);
+
+
     // ---- END Primitive drawing section
   }
 
   checkKeys() {
     if (this.gui.isKeyPressed("KeyS")) {
-        this.birdSpeed += 0.05;
+        this.birdSpeed += 0.05 * this.speedFactor;
         if (this.birdSpeed > 0) {
             this.birdSpeed = 0;
         }
     }
 
     if (this.gui.isKeyPressed("KeyW")) {
-        this.birdSpeed -= 0.05;
+        this.birdSpeed -= 0.05 * this.speedFactor;
     }
 
     if (this.gui.isKeyPressed("KeyR")) {
