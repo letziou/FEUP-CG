@@ -6,10 +6,12 @@ export class MyBillboard extends CGFobject {
     super(scene);
     this.scene = scene;
     this.quad = new MyQuad(scene);
+
     this.x = x;
     this.y = y;
     this.z = z;
     this.scale = scale;
+    
     this.texture = texture;
     this.appearance = new CGFappearance(scene);
     this.appearance.setTexture(this.texture);
@@ -26,17 +28,17 @@ export class MyBillboard extends CGFobject {
     const length = Math.sqrt(directionVec[0]**2 + directionVec[1]**2);
     const normalizedVec = directionVec.map(e => e / length);
 
-    // Calculate the rotation angle (only around Y axis)
+    // Calculate the rotation angle
     const rotY = Math.atan2(-normalizedVec[0], -normalizedVec[1]);
 
     this.scene.pushMatrix();
     this.scene.translate(this.x, this.y + (1 + this.scale) / 2, this.z);
     this.scene.scale(this.scale, this.scale, this.scale);
     this.scene.rotate(rotY, 0, 1, 0);
-    this.scene.setActiveShader(this.shader);
+    //this.scene.setActiveShader(this.shader);
     this.appearance.apply();
     this.quad.display();
-    this.scene.setActiveShader(this.scene.defaultShader);
+    //this.scene.setActiveShader(this.scene.defaultShader);
     this.scene.popMatrix();
   } 
 }
