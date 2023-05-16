@@ -15,6 +15,13 @@ export class MyScene extends CGFscene {
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
     this.eggPosition = { x: 10, y: 0, z: 0};
+
+    this.birdDownTime = 1;
+    this.birdUpTime = 1;
+    this.birdMovingDown = false;
+    this.birdMovingUp = false;
+    this.birdMoveStartTime = 0;
+    this.birdMoveEndTime = 0;
   }
 
   init(application) {
@@ -155,40 +162,29 @@ export class MyScene extends CGFscene {
       let distZ = this.birdPosition.z - this.eggPosition.z;
       let distance = Math.sqrt(distX * distX + distY * distY + distZ * distZ);
       
-      if (!this.eggInBird && this.keyPressedCount >= 5 && distance < 7){ 
+      if(distance < 7)
         this.eggInBird = true;
-        this.keyPressedCount = 1;
-      } 
-
-      if (this.eggInBird && this.keyPressedCount >= 5){
-        this.eggInBird = false;
-        
-        this.eggPosition.x = this.eggPosition.x;
-        this.eggPosition.y = this.eggPosition.y; 
-        this.eggPosition.z = this.eggPosition.z;
-        
-        this.keyPressedCount = 1; 
-      }
-
-      this.keyPressedCount += 1;
     }
   }
 
   update(t) {
     this.deltaTime = t;
     this.checkKeys();
-    this.bird.update();
+    this.bird.update(t);
     
     // Update bird position
     this.birdPosition.x = this.bird.x;
     this.birdPosition.y = this.bird.y;
     this.birdPosition.z = this.bird.z;
 
-
     if(this.eggInBird){
       this.eggPosition.x = this.bird.x;
       this.eggPosition.y = this.bird.y - 0.5; 
       this.eggPosition.z = this.bird.z;
+    }
+
+    if (this.gui.isKeyPressed("KeyP")){
+      this.bird.down();
     }
   }
 }

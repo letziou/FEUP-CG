@@ -39,6 +39,13 @@ export class MyBird extends CGFobject {
 
         this.verticalMoveSpeed = 0;
         this.maxVerticalMoveSpeed = 0.2;
+
+        this.downSpeed = 2;
+        this.upSpeed = 0.5;
+
+        this.birdMovingDown = false;
+        this.birdMovingUp = false;
+        this.initialTime = 0;
     }
 
     turn(val) {
@@ -71,7 +78,23 @@ export class MyBird extends CGFobject {
         }
     }
 
-    update() {
+    down() {
+        this.birdMovingDown = true;
+    }
+
+    bottom() {
+        if(this.y <= -20){
+            this.birdMovingDown = false;
+            this.birdMovingUp = true;
+        }
+    }
+
+    top() {
+        if(this.y >= -0.1)
+            this.birdMovingUp = false;
+    }
+
+    update(t) {
         var val; 
         this.sineWaveTime += 0.05 * (2 + this.moveSpeed);
         
@@ -110,6 +133,25 @@ export class MyBird extends CGFobject {
             //console.log('wing: ' + this.moveSpeed);
         }else{
             this.wingAngle = 0.3 * Math.sin(this.sineWaveTime);
+        }
+
+        if(!this.birdMovingDown && !this.birdMovingUp)
+            this.initialTime = t;
+
+        if (this.birdMovingDown) {
+            this.time = (t - this.initialTime) / 1000;
+            this.x += this.moveSpeed * Math.sin(this.rotation);
+            this.y += -1 / 2 * this.downSpeed * this.time * this.time ;
+            this.z += this.moveSpeed * Math.sin(this.rotation);
+            this.bottom();
+        }
+
+        if (this.birdMovingUp) {
+            this.time = (t - this.initialTime) / 1000;
+            this.x += this.moveSpeed * Math.sin(this.rotation);
+            this.y += 1 / 2 * this.upSpeed * this.time * this.time ;
+            this.z += this.moveSpeed * Math.sin(this.rotation);
+            this.top();
         }
     }
 
