@@ -12,9 +12,9 @@ export class MyBirdEgg extends CGFobject {
 
     this.sphere = new MySphere(scene, slices, stacks, radius, inverted);
 
-    this.x = -0;
+    this.x = -90;
     this.y = -70;
-    this.z = -0;
+    this.z = -70;
 
     this.eggDropping = false;
     this.initialTime = 0;
