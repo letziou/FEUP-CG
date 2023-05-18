@@ -12,9 +12,9 @@ export class MyBirdEgg extends CGFobject {
 
     this.sphere = new MySphere(scene, slices, stacks, radius, inverted);
 
-    this.x = 0;
-    this.y = -20;
-    this.z = 0;
+    this.x = -0;
+    this.y = -70;
+    this.z = -0;
 
     this.eggDropping = false;
     this.initialTime = 0;
@@ -34,16 +34,15 @@ export class MyBirdEgg extends CGFobject {
     
   }
 
-  drop(birdX, birdY, birdZ, speed){
+  drop(birdX, birdY, birdZ){
     this.x = birdX;
     this.y = birdY;
     this.z = birdZ;
-    //this.velocityX = speed * Math.sin();
     this.eggDropping = true;
   }
 
   land(){
-    if(this.y < -68.5){
+    if(this.y < -69.5){
       this.eggDropping = false;
       this.scene.eggInNest();
     }
@@ -56,7 +55,6 @@ export class MyBirdEgg extends CGFobject {
     if(this.eggDropping){
       this.time = (t - this.initialTime) / 1000;
       this.y += -1 / 2 * this.time * this.time;
-      console.log(this.y)
       this.land();
     }
 
@@ -70,16 +68,14 @@ export class MyBirdEgg extends CGFobject {
 
   display(scaleFactor) {
     this.texture.apply();
-    this.scene.scale(1, 1.25, 1);
+    this.scene.scale(1, 1, 1.25);
     this.scene.scale(scaleFactor, scaleFactor, scaleFactor);
     this.sphere.display();
-
-    //console.log("X: " + eggPositionX + "Y: " + eggPositionY + "Z: " + eggPositionZ);
   }
 
-  displayLanded(scaleFactor) {
+  displayInBird(scaleFactor) {
     this.texture.apply();
-    this.scene.scale(1, 1, 1.25);
+    this.scene.scale(1, 1.25, 1);
     this.scene.scale(scaleFactor, scaleFactor, scaleFactor);
     this.sphere.display();
   }

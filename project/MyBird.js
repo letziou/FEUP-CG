@@ -90,7 +90,7 @@ export class MyBird extends CGFobject {
     }
 
     bottom() {
-        if(this.y <= -20){
+        if(this.y <= -72){
             this.birdMovingDown = false;
             this.birdMovingUp = true;
         }

@@ -131,8 +131,8 @@ export class MyScene extends CGFscene {
 
     this.pushMatrix();
     this.translate(this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
-    if(!this.eggIn) this.egg.display(this.scaleFactor, this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
-    else this.egg.displayLanded(this.scaleFactor, this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
+    if(!this.eggInBird) this.egg.display(this.scaleFactor);
+    else this.egg.displayInBird(this.scaleFactor);
     this.popMatrix();
 
     this.pushMatrix();
@@ -175,7 +175,7 @@ export class MyScene extends CGFscene {
       let distZ = this.birdPosition.z - this.nestPosition.z;
       let distance = Math.sqrt(distX * distX + distZ * distZ);
       
-      if (distance < 5) {
+      if (distance < 7.5) {
         this.eggInBird = false;
         this.egg.drop(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
       }
@@ -196,8 +196,6 @@ export class MyScene extends CGFscene {
     this.checkKeys();
     this.bird.update(t, this.speedFactor);
     this.egg.update(t);
-
-    //console.log("X: " + this.birdPosition.x + "Z: " + this.birdPosition.z);
     
     // Update bird position
     this.birdPosition.x = this.bird.x;
