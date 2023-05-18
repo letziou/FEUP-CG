@@ -14,7 +14,8 @@ export class MyScene extends CGFscene {
     super();
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
-    this.eggPosition = { x: 10, y: 0, z: 0};
+    this.eggPosition = { x: 0, y: 0, z: 0};
+    this.nestPosition = { x: -79, y: -71, z: -89};
 
     this.birdDownTime = 1;
     this.birdUpTime = 1;
@@ -22,6 +23,7 @@ export class MyScene extends CGFscene {
     this.birdMovingUp = false;
     this.birdMoveStartTime = 0;
     this.birdMoveEndTime = 0;
+    
   }
 
   init(application) {
@@ -67,6 +69,8 @@ export class MyScene extends CGFscene {
     this.speedFactor = 1;
 
     this.eggInBird = false;
+    this.birdDrop = false;
+    this.eggIn = false;
     this.keyPressedCount = 1;
 
     this.enableTextures(true);
@@ -121,12 +125,14 @@ export class MyScene extends CGFscene {
 
     // Push new matrix and translate it by the bird position
     this.pushMatrix();
+    this.translate(this.nestPosition.x, this.nestPosition.y, this.nestPosition.z);
     this.nest.display();
     this.popMatrix();
 
     this.pushMatrix();
     this.translate(this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
-    this.egg.display();
+    if(!this.eggIn) this.egg.display(this.scaleFactor, this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
+    else this.egg.displayLanded(this.scaleFactor, this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
     this.popMatrix();
 
     this.pushMatrix();
@@ -160,23 +166,38 @@ export class MyScene extends CGFscene {
 
     if (this.gui.isKeyPressed("KeyR")) {
       this.bird.resetPosition();
+      this.eggInBird = false;
+      this.egg.resetPosition();
     }
 
-    if (this.gui.isKeyPressed("KeyP")) {
-      let distX = this.birdPosition.x - this.eggPosition.x;
-      let distY = this.birdPosition.y - this.eggPosition.y;
-      let distZ = this.birdPosition.z - this.eggPosition.z;
-      let distance = Math.sqrt(distX * distX + distY * distY + distZ * distZ);
+    if (this.gui.isKeyPressed("KeyO") && this.eggInBird) {
+      let distX = this.birdPosition.x - this.nestPosition.x;
+      let distZ = this.birdPosition.z - this.nestPosition.z;
+      let distance = Math.sqrt(distX * distX + distZ * distZ);
       
-      if(distance < 7)
-        this.eggInBird = true;
+      if (distance < 5) {
+        this.eggInBird = false;
+        this.egg.drop(this.birdPosition.x, this.birdPosition.y, this.birdPosition.z);
+      }
     }
+  }
+
+  birdStop() {
+    this.birdDrop = false;
+  }
+
+  eggInNest() {
+    this.egg.display(this.scaleFactor, this.eggPosition.x, this.eggPosition.y, this.eggPosition.z);
+    this.eggIn = true;
   }
 
   update(t) {
     this.deltaTime = t;
     this.checkKeys();
-    this.bird.update(t);
+    this.bird.update(t, this.speedFactor);
+    this.egg.update(t);
+
+    //console.log("X: " + this.birdPosition.x + "Z: " + this.birdPosition.z);
     
     // Update bird position
     this.birdPosition.x = this.bird.x;
@@ -185,11 +206,26 @@ export class MyScene extends CGFscene {
 
     if(this.eggInBird){
       this.eggPosition.x = this.bird.x;
-      this.eggPosition.y = this.bird.y - 0.5; 
+      this.eggPosition.y = this.bird.y - 1 * this.scaleFactor; 
       this.eggPosition.z = this.bird.z;
+    } else {
+      this.eggPosition.x = this.egg.x;
+      this.eggPosition.y = this.egg.y;
+      this.eggPosition.z = this.egg.z;
+    }
+
+    if(this.birdDrop){
+      let distX = this.birdPosition.x - this.eggPosition.x;
+      let distY = this.birdPosition.y - this.eggPosition.y - 0.5 * this.scaleFactor;
+      let distZ = this.birdPosition.z - this.eggPosition.z;
+      let distance = Math.sqrt(distX * distX + distY * distY + distZ * distZ);
+
+      if(distance * this.scaleFactor < 3)
+        this.eggInBird = true;
     }
 
     if (this.gui.isKeyPressed("KeyP")){
+      this.birdDrop = true;
       this.bird.down();
     }
   }
