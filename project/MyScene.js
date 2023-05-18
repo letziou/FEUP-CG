@@ -212,7 +212,7 @@ export class MyScene extends CGFscene {
       this.eggPosition.z = this.egg.z;
     }
 
-    if(this.birdDrop){
+    if(this.birdDrop && !this.eggInBird){
       let distX = this.birdPosition.x - this.eggPosition.x;
       let distY = this.birdPosition.y - this.eggPosition.y - 0.5 * this.scaleFactor;
       let distZ = this.birdPosition.z - this.eggPosition.z;
