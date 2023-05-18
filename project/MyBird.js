@@ -63,16 +63,16 @@ export class MyBird extends CGFobject {
         }
     }
 
-    accelerate(val) {
+    accelerate(val, speedFactor) {
         if(val == 1){
-        this.moveSpeed += this.acceleration;
-            if (this.moveSpeed > this.maxMoveSpeed) {
-                this.moveSpeed = this.maxMoveSpeed;
+        this.moveSpeed += this.acceleration * speedFactor;
+            if (this.moveSpeed > this.maxMoveSpeed * speedFactor) {
+                this.moveSpeed = this.maxMoveSpeed * speedFactor;
             }
         }
 
         if(val == 0){
-        this.moveSpeed -= this.deceleration;
+        this.moveSpeed -= this.deceleration * speedFactor;
             if (this.moveSpeed < this.minMoveSpeed) {
                 this.moveSpeed = this.minMoveSpeed;
             }
@@ -90,18 +90,20 @@ export class MyBird extends CGFobject {
     }
 
     bottom() {
-        if(this.y <= -20){
+        if(this.y <= -72){
             this.birdMovingDown = false;
             this.birdMovingUp = true;
         }
     }
 
     top() {
-        if(this.y >= -0.1)
+        if(this.y >= -0.1){
             this.birdMovingUp = false;
+            this.scene.birdStop();
+        }
     }
 
-    update(t) {
+    update(t, speedFactor) {
         var val; 
         this.sineWaveTime += 0.05 * (2 + this.moveSpeed);
 
@@ -113,13 +115,13 @@ export class MyBird extends CGFobject {
         
         if (this.scene.gui.isKeyPressed("KeyW")) {
             val = 1;
-            this.accelerate(val);
+            this.accelerate(val, speedFactor);
             this.wingAngle = 0.3 * Math.sin(this.sineWaveTime * 5);
         }
     
         if (this.scene.gui.isKeyPressed("KeyS")) {
             val = 0;
-            this.accelerate(val);
+            this.accelerate(val, speedFactor);
             this.wingAngle = 0.3 * Math.sin(this.sineWaveTime * 5);
         }
     
