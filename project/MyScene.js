@@ -121,9 +121,9 @@ export class MyScene extends CGFscene {
   followBird() {
     this.camera.setPosition(
       vec3.fromValues(
-        this.birdPosition.x - 5,
+        this.birdPosition.x - 10 * Math.sin(this.bird.rotation),
         this.birdPosition.y + 5,
-        this.birdPosition.z - 5
+        this.birdPosition.z - 10 * Math.cos(this.bird.rotation)
       )
     );
     this.camera.setTarget(vec3.fromValues(
