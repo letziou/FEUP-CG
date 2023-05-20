@@ -7,17 +7,18 @@ import { MySphere } from './MySphere.js';
  * @param inverted - Flag indicating whether to invert the faces of sphere
 */
 export class MyBirdEgg extends CGFobject {
-  constructor(scene, slices, stacks, radius, inverted){
+  constructor(scene, slices, stacks, radius, inverted, positionX, positionY, positionZ){
     super(scene);
 
     this.sphere = new MySphere(scene, slices, stacks, radius, inverted);
 
-    this.x = -90;
-    this.y = -70;
-    this.z = -70;
+    this.x = positionX;
+    this.y = positionY;
+    this.z = positionZ;
 
     this.eggDropping = false;
     this.initialTime = 0;
+    this.index = 0;
 
     this.initMaterials(scene);
   }
@@ -34,17 +35,18 @@ export class MyBirdEgg extends CGFobject {
     
   }
 
-  drop(birdX, birdY, birdZ){
+  drop(birdX, birdY, birdZ, index){
     this.x = birdX;
     this.y = birdY;
     this.z = birdZ;
+    this.index = index;
     this.eggDropping = true;
   }
 
   land(){
-    if(this.y < -69.5){
+    if(this.y < -69){
       this.eggDropping = false;
-      this.scene.eggInNest();
+      this.scene.eggInNest(this.index);
     }
   }
 
