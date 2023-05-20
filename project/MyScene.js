@@ -2,7 +2,6 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFshader, CGFtexture } fr
 import { MyPanorama } from "./MyPanorama.js";
 import { MyBird } from "./MyBird.js";
 import { MyTerrain } from "./MyTerrain.js";
-import { MyBillboard } from "./MyBillboard.js";
 import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
 import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
 
@@ -19,6 +18,7 @@ export class MyScene extends CGFscene {
 
   init(application) {
     super.init(application);
+    this.appStartTime=Date.now(); // current time in milisecs
     
     this.initCameras();
     this.initLights();
@@ -46,7 +46,14 @@ export class MyScene extends CGFscene {
 
     this.texture3 = "images/panorama4.jpg";
 
-    this.billboardTexture = new CGFtexture(this, "images/billboardtree.png");
+    this.billboardTextures = [
+      new CGFtexture(this, "images/billboardtree1.png"),
+      new CGFtexture(this, "images/billboardtree2.png"),
+      new CGFtexture(this, "images/billboardtree3.png")
+    ];
+
+    this.billboardShader = new CGFshader(this.gl, "billboard.vert", "billboard.frag");
+    this.billboardShader.setUniformsValues({uWindIntensity: 0.6, timeFactor: 0.0});
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -125,11 +132,15 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     this.pushMatrix();
+    this.setActiveShader(this.billboardShader);
     this.treeGroupPatch.display();
+    this.setActiveShader(this.defaultShader);
     this.popMatrix();
 
     this.pushMatrix();
-    //this.treeRowPatch.display();
+    this.setActiveShader(this.billboardShader);
+    this.treeRowPatch.display();
+    this.setActiveShader(this.defaultShader);
     this.popMatrix();
     
     // ---- BEGIN Primitive drawing section
@@ -160,6 +171,7 @@ export class MyScene extends CGFscene {
   }
 
   update(t) {
+    var timeSinceAppStart=(t-this.appStartTime)/1000.0;
     this.deltaTime = t;
     this.checkKeys();
     this.bird.update();
@@ -168,5 +180,7 @@ export class MyScene extends CGFscene {
     this.birdPosition.x = this.bird.x;
     this.birdPosition.y = this.bird.y;
     this.birdPosition.z = this.bird.z;
+
+    this.billboardShader.setUniformsValues({timeFactor: timeSinceAppStart});
   }
 }

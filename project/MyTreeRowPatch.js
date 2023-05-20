@@ -2,10 +2,9 @@ import { CGFobject } from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 export class MyTreeRowPatch extends CGFobject {
-  constructor(scene, texture) {
+  constructor(scene) {
     super(scene);
     this.scene = scene;
-    this.texture = texture;
 
     this.trees = [];
     
@@ -14,9 +13,11 @@ export class MyTreeRowPatch extends CGFobject {
       let randz = 2 + Math.random() * 7;
       let randScale = 3 + Math.random() * 10;
 
-      let base_x = -150 + i * 15;  
-      let base_z = -130;  
-      this.trees.push(new MyBillboard(scene, texture, base_x + randx, -72, base_z + randz, randScale));
+      let base_x = 35 + i * 10;  
+      let base_z = 15;  
+
+      let randTexture = this.scene.billboardTextures[Math.floor(Math.random() * this.scene.billboardTextures.length)];
+      this.trees.push(new MyBillboard(scene, randTexture, base_x + randx, -73, base_z + randz, randScale));
     }
   }
   
