@@ -35,10 +35,6 @@ export class MyBirdEgg extends CGFobject {
     
   }
 
-  positions(){
-    console.log("X: " + this.x + "Y: " + this.y + "Z: " + this.z)
-  }
-
   drop(birdX, birdY, birdZ, index){
     this.x = birdX;
     this.y = birdY;
