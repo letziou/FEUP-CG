@@ -4,6 +4,8 @@ import { MyBird } from "./MyBird.js";
 import { MyBirdEgg } from "./MyBirdEgg.js";
 import { MyNest } from "./MyNest.js";
 import { MyTerrain } from "./MyTerrain.js";
+import { MyTreeGroupPatch } from "./MyTreeGroupPatch.js";
+import { MyTreeRowPatch } from "./MyTreeRowPatch.js";
 
 /**
  * MyScene
@@ -55,6 +57,13 @@ export class MyScene extends CGFscene {
 
     this.texture3 = "images/panorama4.jpg";
 
+    this.billboardTextures = [
+      new CGFtexture(this, "images/billboardtree1.png"),
+      new CGFtexture(this, "images/billboardtree2.png"),
+      new CGFtexture(this, "images/billboardtree3.png")
+    ];
+    this.billboardShader = new CGFshader(this.gl, "billboard.vert", "billboard.frag");
+
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
@@ -67,6 +76,11 @@ export class MyScene extends CGFscene {
     this.eggInBirdIndex = 99;
     this.eggsIn = [];
     this.addEggs();
+    
+    //this.billboard = new MyBillboard(this, this.billboardTexture);
+
+    this.treeGroupPatch = new MyTreeGroupPatch(this, this.billboardTexture);
+    this.treeRowPatch = new MyTreeRowPatch(this, this.billboardTexture);
     
     this.displayAxis = true;
     this.displaySphere = true;
@@ -135,6 +149,9 @@ export class MyScene extends CGFscene {
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
+    // Update the camera position
+    //this.camera.position = this.camera.getPosition();
+
     // Draw axis
     if (this.displayAxis) 
       this.axis.display();
@@ -159,6 +176,18 @@ export class MyScene extends CGFscene {
     this.bird.display();
     this.popMatrix();
 
+    this.pushMatrix();
+    this.setActiveShader(this.billboardShader);
+    this.treeGroupPatch.display();
+    this.setActiveShader(this.defaultShader);
+    this.popMatrix();
+
+    this.pushMatrix();
+    this.setActiveShader(this.billboardShader);
+    this.treeRowPatch.display();
+    this.setActiveShader(this.defaultShader);
+    this.popMatrix();
+    
     // ---- BEGIN Primitive drawing section
     if (this.displaySphere) 
       this.panorama.display();
