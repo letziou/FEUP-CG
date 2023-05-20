@@ -80,6 +80,8 @@ export class MyScene extends CGFscene {
     this.eggIn = false;
     this.keyPressedCount = 1;
 
+    this.follow = false;
+
     this.enableTextures(true);
     this.terrain = new MyTerrain(this);
   }
@@ -99,6 +101,21 @@ export class MyScene extends CGFscene {
       vec3.fromValues(50, 10, 15),
       vec3.fromValues(0, 0, 0)
     );
+  }
+
+  followBird() {
+    this.camera.setPosition(
+      vec3.fromValues(
+        this.birdPosition.x - 5,
+        this.birdPosition.y + 5,
+        this.birdPosition.z + 5
+      )
+    );
+    this.camera.setTarget(vec3.fromValues(
+      this.birdPosition.x,
+      this.birdPosition.y,
+      this.birdPosition.z
+    ));
   }
 
   setDefaultAppearance() {
@@ -229,6 +246,8 @@ export class MyScene extends CGFscene {
     this.deltaTime = t;
     this.checkKeys();
     this.bird.update(t, this.speedFactor);
+
+    if(this.follow) this.followBird();
     
     // Update bird position
     this.birdPosition.x = this.bird.x;
