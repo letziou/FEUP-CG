@@ -1,18 +1,9 @@
 import {CGFobject} from '../lib/CGF.js';
-/**
-* MyPlane
-* @constructor
- * @param scene - Reference to MyScene object
- * @param nDivs - number of divisions in both directions of the surface
- * @param minS - minimum texture coordinate in S
- * @param maxS - maximum texture coordinate in S
- * @param minT - minimum texture coordinate in T
- * @param maxT - maximum texture coordinate in T
-*/
+/** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
 export class MyPlane extends CGFobject {
 	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
 		super(scene);
-		// nrDivs = 1 if not provided
+		// -- nrDivs = 1 if not provided -- //
 		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
 		this.nrDivs = nrDivs;
 		this.patchLength = 1.0 / nrDivs;
@@ -24,8 +15,13 @@ export class MyPlane extends CGFobject {
 		this.w = (this.maxT - this.minT) / this.nrDivs;
 		this.initBuffers();
 	}
+
+	/**
+	 * @method initBuffers
+	 * Initializes Plane's buffers
+	 */
 	initBuffers() {
-		// Generate vertices, normals, and texCoords
+		// -- Generate vertices, normals, and texCoords -- //
 		this.vertices = [];
 		this.normals = [];
 		this.texCoords = [];
@@ -59,15 +55,18 @@ export class MyPlane extends CGFobject {
 		this.initGLBuffers();
 	}
 
-	setFillMode() { 
-		this.primitiveType=this.scene.gl.TRIANGLE_STRIP;
+	/**
+	 * Set Method to enable Fill mode (Uses triangles)
+	 */
+	setFillMode() {
+		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 	}
 
-	setLineMode() 
-	{ 
-		this.primitiveType=this.scene.gl.LINES;
+	/**
+	 * Set Method to enable Line mode (Uses lines)
+	 */
+	setLineMode() {
+		this.primitiveType = this.scene.gl.LINES;
 	};
 
 }
-
-
