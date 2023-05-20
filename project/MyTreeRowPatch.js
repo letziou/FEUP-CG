@@ -14,7 +14,7 @@ export class MyTreeRowPatch extends CGFobject {
       let randScale = 3 + Math.random() * 10;
 
       let base_x = 35 + i * 10;  
-      let base_z = 15;  
+      let base_z = 10;  
 
       let randTexture = this.scene.billboardTextures[Math.floor(Math.random() * this.scene.billboardTextures.length)];
       this.trees.push(new MyBillboard(scene, randTexture, base_x + randx, -73, base_z + randz, randScale));

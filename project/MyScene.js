@@ -17,7 +17,7 @@ export class MyScene extends CGFscene {
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
     this.eggPosition = { x: 0, y: 0, z: 0};
-    this.nestPosition = { x: -79, y: -71, z: -89};
+    this.nestPosition = { x: 40, y: -72, z: 40};
 
     this.birdDownTime = 1;
     this.birdUpTime = 1;
@@ -257,13 +257,13 @@ export class MyScene extends CGFscene {
   addEggs() {
     for (let i = 0; i < 2; ++i) {
       for (let j = 0; j < 3; ++j) {
-        let randx = 2 + Math.random() * 5;
-        let randz = 2 + Math.random() * 5;
+        let randx = 2 + Math.random() * 10;
+        let randz = 2 + Math.random() * 10;
 
-        let base_x = -120 + i * 15;  
-        let base_z = -120 + j * 15;  
+        let base_x = 70 + i * 15;  
+        let base_z = -20 + j * 15;  
         this.eggs.push(new MyBirdEgg(this, 50, 25, 0.5, false, base_x + randx, -70, base_z + randz));
-        this.eggsPositions.push({ x: base_x + randx, y: -70, z: base_z + randz});
+        this.eggsPositions.push({ x: base_x + randx, y: -72, z: base_z + randz});
         this.eggsInBird.push(false);
         this.eggsIn.push(false);
       }
