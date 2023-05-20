@@ -1,12 +1,16 @@
-import { CGFobject } from '../lib/CGF.js';
+import { CGFobject, CGFappearance } from '../lib/CGF.js';
 import { MyBillboard } from "./MyBillboard.js";
 
 export class MyTreeRowPatch extends CGFobject {
-  constructor(scene) {
+  constructor(scene, texture ) {
     super(scene);
     this.scene = scene;
-
     this.trees = [];
+
+    // Create a new appearance for the tree group
+    this.texture = new CGFappearance(scene);
+    this.texture.setTexture(texture);
+    this.texture.setTextureWrap('REPEAT', 'REPEAT');
     
     for (let i = 0; i < 7; ++i) {
       let randx = 2 + Math.random() * 7;

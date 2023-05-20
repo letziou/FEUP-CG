@@ -11,7 +11,6 @@ uniform mat4 uPMatrix;
 uniform float uWindIntensity; 
 uniform float timeFactor;  
 
-
 varying vec2 vTextureCoord;
 
 void main(void) {

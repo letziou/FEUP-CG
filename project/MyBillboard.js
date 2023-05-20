@@ -1,5 +1,5 @@
 import { MyQuad } from "./MyQuad.js";
-import { CGFobject, CGFappearance, CGFshader } from '../lib/CGF.js';
+import { CGFobject } from '../lib/CGF.js';
 
 export class MyBillboard extends CGFobject {
   constructor(scene, texture, x = 0, y = 0, z = 0, scale = 1) {

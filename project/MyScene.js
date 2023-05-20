@@ -149,8 +149,6 @@ export class MyScene extends CGFscene {
 
     this.gl.activeTexture(this.gl.TEXTURE1);
 
-
-    // ---- END Primitive drawing section
   }
 
   checkKeys() {
