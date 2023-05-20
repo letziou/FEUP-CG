@@ -58,7 +58,6 @@ export class MyScene extends CGFscene {
     //Initialize scene objects
     this.axis = new CGFaxis(this);
     this.panorama = new MyPanorama(this, this.texture3, 50, 25, 200, true);
-    this.egg = new MyBirdEgg(this, 50, 25, 0.5, false, -115, -70, -100);
     this.nest = new MyNest(this);
     this.bird = new MyBird(this);
 
@@ -108,7 +107,7 @@ export class MyScene extends CGFscene {
       vec3.fromValues(
         this.birdPosition.x - 5,
         this.birdPosition.y + 5,
-        this.birdPosition.z + 5
+        this.birdPosition.z - 5
       )
     );
     this.camera.setTarget(vec3.fromValues(
