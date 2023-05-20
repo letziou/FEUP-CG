@@ -30,6 +30,7 @@ export class MyScene extends CGFscene {
 
   init(application) {
     super.init(application);
+    this.appStartTime=Date.now(); // current time in milisecs
     
     this.initCameras();
     this.initLights();
@@ -63,6 +64,7 @@ export class MyScene extends CGFscene {
       new CGFtexture(this, "images/billboardtree3.png")
     ];
     this.billboardShader = new CGFshader(this.gl, "billboard.vert", "billboard.frag");
+    this.billboardShader.setUniformsValues({uWindIntensity: 0.6, timeFactor: 0.0});
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
@@ -271,6 +273,7 @@ export class MyScene extends CGFscene {
   }
 
   update(t) {
+    var timeSinceAppStart=(t-this.appStartTime)/1000.0;
     this.deltaTime = t;
     this.checkKeys();
     this.bird.update(t, this.speedFactor);
@@ -316,5 +319,6 @@ export class MyScene extends CGFscene {
       this.birdDrop = true;
       this.bird.down();
     }
+    this.billboardShader.setUniformsValues({timeFactor: timeSinceAppStart});
   }
 }
