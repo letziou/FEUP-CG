@@ -1,5 +1,3 @@
-// This is a very basic vertex shader that just passes along model space coordinates
-// to the fragment shader.
 precision mediump float;
 
 attribute vec3 aVertexPosition;
@@ -15,7 +13,7 @@ varying vec2 vTextureCoord;
 
 void main(void) {
     vec3 WindDirection = vec3(0, 0, 1);
-    float textureThreshold = 0.5; // Adjust this value to control the threshold for the moving texture
+    float textureThreshold = 0.5; 
 
     // Apply displacement only to the top part of the texture
     vec3 windOffset = aVertexNormal * uWindIntensity * dot(normalize(WindDirection), aVertexNormal) * step(aTextureCoord.y, textureThreshold);

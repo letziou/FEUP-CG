@@ -63,7 +63,7 @@ export class MyScene extends CGFscene {
       new CGFtexture(this, "images/billboardtree2.png"),
       new CGFtexture(this, "images/billboardtree3.png")
     ];
-    this.billboardShader = new CGFshader(this.gl, "billboard.vert", "billboard.frag");
+    this.billboardShader = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboard.frag");
     this.billboardShader.setUniformsValues({uWindIntensity: 0.6, timeFactor: 0.0});
 
     //Initialize scene objects

@@ -1,4 +1,3 @@
-// This is a simple fragment shader that discards fragments with alpha less than 1.0
 precision mediump float;
 
 varying vec2 vTextureCoord;
