@@ -2,13 +2,18 @@
 
 ## Group T06G06
 
+| Name             | Number    | E-Mail             |
+| ---------------- | --------- | ------------------ |
+| Diogo Pinheiro ALmeida         | 202006059 | up202006059@up.pt                |
+| Rafael Nuno Grilo Morgado         | 201506449 | up201506449@fc.up.pt                |
+
 ## Project Notes
 
 - In the first picture we can observe our panorama. This was made possible because we sorrounded our field with a giean sphere where our normals were inverted to the inside of the sphere thus being able for us to see the light refleted inside of the sphere.
 
 ![Image of Panorama](screenshots/project-t06g06-1.png)
 
-- To draw our bird we created several classes that draw different shapes. In MyBirdBodyTail we draw a cone, in MyBirdHead we draw a sphere, in MyBirdWing we draw a quadrilateral and in MyBirdTail we draw a triangle. 
+- To draw our bird we created several classes that draw different shapes. In MyBirdBodyTail we draw a cone, in MyBirdHead we draw a sphere, in MyBirdWing we draw a quadrilateral and in MyBirdTail we draw a triangle.
 - To make the bird a bird we use the functions of translation, rotation and scaling to build our bird in the MyBird.
 
 ![Image of Bird](screenshots/project-t06g06-2.png)
@@ -26,7 +31,7 @@
 ![Image of Bird's eggs and nets](screenshots/project-t06g06-4.png)
 
 - For the trees, we started by making a billboard that creates a simple quad, we then had to make the quad rotate in accordance with the camera in order to get the billboard effect, as such we take the camera position and calculate its vector to the quad itself in the x z axis, then we normalize said vector and calculate the rotation needed for the angle to be applied in the transformations before the display.
-- We then applied a texture with a shader that would only allow colors to be displayed, we made 2 additional textures for the trees. We then made two additional classes for the tree group and tree line, we applied some randomness to the displaying of the trees using the Math.random function. We then call them in the scene along with the 3 different textures and apply said textures in the scene to prevent loss of performance. 
+- We then applied a texture with a shader that would only allow colors to be displayed, we made 2 additional textures for the trees. We then made two additional classes for the tree group and tree line, we applied some randomness to the displaying of the trees using the Math.random function. We then call them in the scene along with the 3 different textures and apply said textures in the scene to prevent loss of performance.
 
 ![Image of Trees](screenshots/project-t06g06-5.png)
 
