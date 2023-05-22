@@ -44,7 +44,7 @@ export class MyBirdEgg extends CGFobject {
   }
 
   land(){
-    if(this.y < -69){
+    if(this.y < -71){
       this.eggDropping = false;
       this.scene.eggInNest(this.index);
     }
@@ -63,9 +63,9 @@ export class MyBirdEgg extends CGFobject {
   }
 
   resetPosition() {
-    this.x = 0;
-    this.y = -20;
-    this.z = 0;
+    this.x = positionX;
+    this.y = positionY;
+    this.z = positionZ;
   }
 
   display(scaleFactor) {

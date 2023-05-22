@@ -27,7 +27,7 @@ export class MyBird extends CGFobject {
 
         this.scene = scene;
         this.x = 0;
-        this.y = 0;
+        this.y = -65;
         this.z = 0;
         this.rotation = 0;
 
@@ -97,7 +97,7 @@ export class MyBird extends CGFobject {
     }
 
     top() {
-        if(this.y >= -0.1){
+        if(this.y >= -65){
             this.birdMovingUp = false;
             this.scene.birdStop();
         }
@@ -158,24 +158,24 @@ export class MyBird extends CGFobject {
 
         if (this.birdMovingDown) {
             this.time = (t - this.initialTime) / 1000;
-            this.x += this.moveSpeed * Math.sin(this.rotation);
+            //this.x += this.moveSpeed;
             this.y += -1 / 2 * this.downSpeed * this.time * this.time ;
-            this.z += this.moveSpeed * Math.sin(this.rotation);
+            //this.z += this.moveSpeed;
             this.bottom();
         }
 
         if (this.birdMovingUp) {
             this.time = (t - this.initialTime) / 1000;
-            this.x += this.moveSpeed * Math.sin(this.rotation);
+            //this.x += this.moveSpeed * Math.sin(this.rotation);
             this.y += 1 / 2 * this.upSpeed * this.time * this.time ;
-            this.z += this.moveSpeed * Math.sin(this.rotation);
+            //this.z += this.moveSpeed * Math.sin(this.rotation);
             this.top();
         }
     }
 
     resetPosition() {
         this.x = 0;
-        this.y = 0;
+        this.y = -65;
         this.z = 0;
         this.rotation = 0;
         this.moveSpeed = 0;
