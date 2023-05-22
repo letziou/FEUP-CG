@@ -17,7 +17,7 @@ export class MyScene extends CGFscene {
     this.birdSpeed = 0;
     this.birdPosition = { x: 0, y: 0, z: 0 };
     this.eggPosition = { x: 0, y: 0, z: 0};
-    this.nestPosition = { x: 40, y: -72, z: 40};
+    this.nestPosition = { x: 40, y: -73, z: 40};
 
     this.birdDownTime = 1;
     this.birdUpTime = 1;
@@ -63,6 +63,7 @@ export class MyScene extends CGFscene {
       new CGFtexture(this, "images/billboardtree2.png"),
       new CGFtexture(this, "images/billboardtree3.png")
     ];
+    
     this.billboardShader = new CGFshader(this.gl, "shaders/billboard.vert", "shaders/billboard.frag");
     this.billboardShader.setUniformsValues({uWindIntensity: 0.6, timeFactor: 0.0});
 
@@ -113,17 +114,17 @@ export class MyScene extends CGFscene {
       1.0,
       0.1,
       1000,
-      vec3.fromValues(50, 10, 15),
-      vec3.fromValues(0, 0, 0)
+      vec3.fromValues(25, -50, 15),
+      vec3.fromValues(0, -71, 0)
     );
   }
 
   followBird() {
     this.camera.setPosition(
       vec3.fromValues(
-        this.birdPosition.x - 10 * Math.sin(this.bird.rotation),
-        this.birdPosition.y + 5,
-        this.birdPosition.z - 10 * Math.cos(this.bird.rotation)
+        this.birdPosition.x - 15 * Math.sin(this.bird.rotation),
+        this.birdPosition.y + 6,
+        this.birdPosition.z - 15 * Math.cos(this.bird.rotation)
       )
     );
     this.camera.setTarget(vec3.fromValues(
@@ -264,7 +265,7 @@ export class MyScene extends CGFscene {
 
         let base_x = 70 + i * 15;  
         let base_z = -20 + j * 15;  
-        this.eggs.push(new MyBirdEgg(this, 50, 25, 0.5, false, base_x + randx, -70, base_z + randz));
+        this.eggs.push(new MyBirdEgg(this, 50, 25, 0.5, false, base_x + randx, -72, base_z + randz));
         this.eggsPositions.push({ x: base_x + randx, y: -72, z: base_z + randz});
         this.eggsInBird.push(false);
         this.eggsIn.push(false);
@@ -308,7 +309,7 @@ export class MyScene extends CGFscene {
         let distZ = this.birdPosition.z - eggPosition.z;
         let distance = Math.sqrt(distX * distX + distY * distY + distZ * distZ);
   
-        if(distance * this.scaleFactor < 5){
+        if(distance * this.scaleFactor < 2){
           this.eggsInBird[i] = true;
           this.eggInBirdIndex = i;
         }
